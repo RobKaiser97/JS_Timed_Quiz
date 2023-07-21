@@ -31,6 +31,11 @@ body {
   .card-header h3 {
     text-align: center;
   }
+
+  .card-header h4 {
+    text-align: center;
+  }
+  
   .card-header::after {
     content: " ";
     display: block;
@@ -39,8 +44,32 @@ body {
     height: 2px;
   }
   
-  .card-body {
-    min-height: 100px;
+  .questions-card {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    min-height: 50px;
+    padding: 10px;
+  }
+
+  .questions-card .answers {
+    display: flex;
+    min-height: 50px;
+    margin: 5px;
+    border-radius: 25px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: rgba(0, 106, 255, 0.35)
+  }
+
+  .answers:hover {
+    background-color: rgba(0, 106, 255, 0.70)
+  }
+
+  .answers:active {
+    background-color: rgba(255, 149, 0, 0.5);
   }
   
   .card-footer {
@@ -85,8 +114,16 @@ body {
   .float-right {
     float: right;
   }
+
+  .show {
+    display: block;
+  }
+
+  .hide {
+    display: none;
+  }
   
-  #password {
+  /* #password {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -105,7 +142,7 @@ body {
     border-radius: 6px;
     resize: none;
     overflow: hidden;
-  }
+  } */
   
   @media (max-width: 690px) {
     .btn {
@@ -114,9 +151,9 @@ body {
       padding: 10px 15px;
     }
   
-    #password {
+    /* #password {
       font-size: 1rem;
-    }
+    } */
   }
   
   @media (max-width: 500px) {

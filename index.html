@@ -6,31 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Timed JS Quiz</title>
     <link rel="stylesheet" href="./Assets/CSS/style.css" />
-    <script src="./Assets/JavaScript/script.js" defer></script>
+    <script src="/Users/robertkaiser/bootcamp/JS_Timed_Quiz/Assets/JS/script.js" defer></script>
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <h3>Highscore</h3>
-        <h3>Time remaining:</h3>
+        <h3 id="highscore">Highscore</h3>
+        <h3 id="countdown">Time remaining:</h3>
       </header>
+      
       <div class="card">
         <div class="card-header">
-          <h3>Please choose an answer before the time runs out:</h3>
+          <h3 id="question"></h3>
+          <h4>Choose an answer before the time runs out:</h4>
         </div>
         <!-- Target this area from javascript to contain quiz -->
-        <div class="card-body">
-          <textarea
-            readonly
-            id="password"
-            placeholder="Put my quiz here"
-            aria-label="Generated Password"
-          ></textarea>
+        <div class="questions-card">
+            <div class="answers" id="answer-one">5</div>
+            <div class="answers" id="answer-two">5</div> 
+            <div class="answers" id="answer-three">5</div> 
+            <div class="answers" id="answer-four">5</div>          
         </div>
+
         <div class="card-footer">
-          <button id="generate" class="btn">Submit</button>
+          <button id="start" class="btn">Start</button>
         </div>
-      </div>
+
+        <div id="submit-div" class="card-footer hide">
+          <button id="submit" class="btn">Submit</button>
+        </div>
     </div>
   </body>
 </html>
