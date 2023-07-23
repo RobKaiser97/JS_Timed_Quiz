@@ -17,21 +17,24 @@
         <h3 id="countdown">Time remaining:</h3>
       </header>
       
+      <section id="score-sheet" class="card hide">
+
+      </section>
       <div class="card">
         <div class="card-header">
           <h3 id="question"></h3>
-          <h4>Choose an answer before the time runs out:</h4>
+          <h4 id="instructions">Choose an answer before the time runs out:</h4>
         </div>
         <!-- Target this area from javascript to contain quiz -->
-        <div class="answer-btns" id="answer-btns">
-          <btn class="answers" id="answer-btn">5</btn>
-          <btn class="answers" id="answer-btn">5</btn>
-          <btn class="answers" id="answer-btn">5</btn>
-          <btn class="answers" id="answer-btn">5</btn>       
+        <div class="answer-btns" id="answer-btns">      
         </div>
 
         <div class="card-footer">
           <button id="start" class="btn">Start</button>
+        </div>
+
+        <div id="nxt-btn" class="card-footer hide">
+          <button id="next" class="btn">Next</button>
         </div>
 
         <div id="submit-div" class="card-footer hide">

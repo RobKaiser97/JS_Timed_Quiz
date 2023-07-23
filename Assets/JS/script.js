@@ -2,11 +2,14 @@
 var timeLeft = 100 //sec
 var counterH3 = document.getElementById("countdown");
 var start = document.getElementById('start');
+var next = document.getElementById('nxt-btn');
 var submit = document.getElementById('submit-div');
 var questionElement = document.getElementById('question');
 var answerButtonsElement = document.getElementById('answer-btns');
+var instructions = document.getElementById('instructions');
 var currentQuestionIndex = 0;
 var score = 0;
+
 
 // Initial countdown text
 counterH3.innerText = "Time Remaining: " + timeLeft;
@@ -79,6 +82,7 @@ function showQuestion() {
       button.dataset.correct = answer.correct;
     }
     button.addEventListener('click', selectAnswer);
+    
   });
 }
 
@@ -86,10 +90,8 @@ function selectAnswer(e) {
   const selectedButton = e.target;
   const isCorrect = selectedButton.dataset.correct === "true";
   if (isCorrect) {
-    alert("Correct!");
     score++;
   } else {
-    alert("Wrong Answer, time has been reduced!");
     WrongAnswer();
   }
   if (currentQuestionIndex < questions.length - 1) {
@@ -104,7 +106,7 @@ function WrongAnswer() {
 }
 
 function promptUserInitials() {
-  var initials = prompt("Enter your initials");
+  var initials = prompt("Enter your initials to save your score.");
   if (initials === null) {
     return;
   }
@@ -127,12 +129,15 @@ function nextQuestion() {
 
 function showScore() {
   resetState();
+  let scorePercentage = Math.floor(score / questions.length * 100);
   // display the score
-  questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!';
+  questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!' + '<br>' + 'That is ' + scorePercentage + '%!';
   //store the score to the local storage
-  localStorage.setItem("score", score);
+  localStorage.setItem("score", scorePercentage);
   // prompt the user for their initials
   promptUserInitials();
+  instructions.innerHTML = "";
+  return;
 }
 
 function StartQuiz() {
@@ -143,10 +148,11 @@ function StartQuiz() {
     // hide start button
     start.style.display = "none";
     // display submit button
-    submit.classList.remove("hide");
+    next.classList.remove = "hide";
     showQuestion();
   });
 }
 
 // Start Quiz on page load
 StartQuiz();
+console.log(localStorage);
