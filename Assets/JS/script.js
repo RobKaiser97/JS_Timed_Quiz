@@ -1,5 +1,16 @@
+// Variables
 var timeLeft = 100 //sec
-var counterH3 = document.getElementById("countdown")
+var counterH3 = document.getElementById("countdown");
+var start = document.getElementById('start');
+var submit = document.getElementById('submit-div');
+var questionElement = document.getElementById('question');
+var answerButtonsElement = document.getElementById('answer-btns');
+var currentQuestionIndex = 0;
+var score = 0;
+
+// Initial countdown text
+counterH3.innerText = "Time Remaining: " + timeLeft;
+
 const questions = [
   {
     question: "What does HTML stand for?",
@@ -11,33 +22,35 @@ const questions = [
     ]
   },
   {
-    
+    question: "What does CSS stand for?",
+    answers: [
+      { text: "Cascading Style Scripts", correct: false },
+      { text: "Cascading Style Sheets", correct: true },
+      { text: "Cascading Style Syntax", correct: false },
+      { text: "Cascading Style Symbols", correct: false }
+    ]
+  },
+  {
+    question: "What function is used to select an element by its id?",
+    answers: [
+      { text: "document.getElementByClass()", correct: false },
+      { text: "document.getElementByTag()", correct: false },
+      { text: "document.getElementById()", correct: true },
+      { text: "document.getElementByAttribute()", correct: false }
+    ]
+  },
+  {
+    question: "What does DOM stand for?",
+    answers: [
+      { text: "Document Object Markup", correct: false },
+      { text: "Document Object Method", correct: false },
+      { text: "Document Object Mode", correct: false },
+      { text: "Document Object Model", correct: true }
+    ]
   }
 ]
-var questionOne = "What does HTML stand for?"
-var questionOneAnswers = ["Hyper Text Markup Language", "Hyper Text Makeup Language", "Hyper Text Markup Lingo", "Hyper Text Markup Languish"]
-var questionTwo = "What does CSS stand for?"
-var questionTwoAnswers = ["Cascading Style Sheets", "Cascading Style Scripts", "Cascading Style Syntax", "Cascading Style Symbols"]
-var questionThree = "What function is used to select an element by its id?"
-var questionThreeAnswers = ["document.getElementById()", "document.getElementByClass()", "document.getElementByTag()", "document.getElementByAttribute()"]
-var questionFour = "What does DOM stand for?"
-var questionFourAnswers = ["Document Object Model", "Document Object Markup", "Document Object Method", "Document Object Mode"]
-var correctAnswers = ["Hyper Text Markup Language", "Cascading Style Sheets", "document.getElementById()", "Document Object Model"]
 
-let questions = [questionOne, questionTwo, questionThree, questionFour]
-console.log(questions);
-let answers = [questionOneAnswers, questionTwoAnswers, questionThreeAnswers, questionFourAnswers]
-console.log(answers);
-
-
-counterH3.innerText = "Time Remaining: " + timeLeft;
-
-var start = document.getElementById('start');
-var submit = document.getElementById('submit-div');
-var submitShow = function() {
-  submit.classList.remove("hide");
-};
-
+// Functions
 
 function countdown() {
   var timeInterval = setInterval(function () {
@@ -51,45 +64,89 @@ function countdown() {
   }, 1000);
 }
 
-start.addEventListener('click', function() {
-  if(start) {
-    countdown();
-    // hide start button
-  start.style.display = "none";
-  // display submit button
-  submitShow();
-  }
-  
-});
+function showQuestion() {
+  resetState();
+  let currentQuestion = questions[currentQuestionIndex];
+  let questionNumber = currentQuestionIndex + 1;
+  questionElement.innerHTML = questionNumber + ". " + currentQuestion.question;
 
-// i need to write a function to propagate the users initials and quiz score to the highscores page
-// i need to write a function to store the users initials and quiz score in local storage 
-// i need to write a function to retrieve the users initials and quiz score from local storage  
-// i need to write a function to display the users initials and quiz score on the highscores page
-// i need to write a function to clear the users initials and quiz score from local storage 
-// i need to write a function to subtract 15 seconds from the timer when the user answers a question incorrectly  
-// i need to write a function to calculate the users score based on answers clicked
-// i need to write a function that will hide and show certain rows representing the questions and answers
+  currentQuestion.answers.forEach(answer => {
+    const button = document.createElement('button');
+    button.innerHTML = answer.text;
+    button.classList.add('answers');
+    answerButtonsElement.appendChild(button);
+    if (answer.correct) {
+      button.dataset.correct = answer.correct;
+    }
+    button.addEventListener('click', selectAnswer);
+  });
+}
+
+function selectAnswer(e) {
+  const selectedButton = e.target;
+  const isCorrect = selectedButton.dataset.correct === "true";
+  if (isCorrect) {
+    alert("Correct!");
+    score++;
+  } else {
+    alert("Wrong Answer, time has been reduced!");
+    WrongAnswer();
+  }
+  if (currentQuestionIndex < questions.length - 1) {
+    nextQuestion();
+  } else {
+    showScore();
+  }
+}
 
 function WrongAnswer() {
   timeLeft = timeLeft - 15;
 }
 
-function IsAnswerCorrect() {
-  if (this.value = answers) {
-    alert("Correct!");
-  } else {
-    alert("Wrong!");
-    WrongAnswer();
-  }
-}
-
 function promptUserInitials() {
   var initials = prompt("Enter your initials");
-  if (prompt = null) {
+  if (initials === null) {
     return;
   }
   localStorage.setItem("initials", initials);
   return initials;
 }
 
+function resetState() {
+  while (answerButtonsElement.firstChild) {
+    answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+  }
+}
+
+function nextQuestion() {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  }
+}
+
+function showScore() {
+  resetState();
+  // display the score
+  questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!';
+  //store the score to the local storage
+  localStorage.setItem("score", score);
+  // prompt the user for their initials
+  promptUserInitials();
+}
+
+function StartQuiz() {
+  currentQuestionIndex = 0;
+  score = 0;
+  start.addEventListener('click', function() {
+    countdown();
+    // hide start button
+    start.style.display = "none";
+    // display submit button
+    submit.classList.remove("hide");
+    showQuestion();
+  });
+}
+
+// Start Quiz on page load
+StartQuiz();
