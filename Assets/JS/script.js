@@ -12,6 +12,8 @@ var score = 0;
 var HighScores = document.getElementById('highscore');
 var quizBody = document.getElementById('quiz-body');
 var scoreCard = document.getElementById('score-sheet');
+var prevScore = sessionStorage.getItem("initials") + " " + sessionStorage.getItem("score") + "/4";
+var createLi = document.createElement('li'); prevScore;
 
 
 // Initial countdown text
@@ -170,11 +172,13 @@ var RestartQuiz = function() {
     StartQuiz();
   });
   console.log("RestartQuiz");
+  $("ul").append(createLi);
   location.reload();
 }
 
 // Start Quiz on page load
 StartQuiz();
+$("ul").append(createLi);
 
 HighScores.addEventListener('click', function() {
   quizBody.style.display = "none";
