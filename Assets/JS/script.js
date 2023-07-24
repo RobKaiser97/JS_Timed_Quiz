@@ -2,13 +2,16 @@
 var timeLeft = 100 //sec
 var counterH3 = document.getElementById("countdown");
 var start = document.getElementById('start');
-var next = document.getElementById('nxt-btn');
-var submit = document.getElementById('submit-div');
+var next = document.getElementById('next');
+var playAgain = document.getElementById('play-again-btn');
 var questionElement = document.getElementById('question');
 var answerButtonsElement = document.getElementById('answer-btns');
 var instructions = document.getElementById('instructions');
 var currentQuestionIndex = 0;
 var score = 0;
+var HighScores = document.getElementById('highscore');
+var quizBody = document.getElementById('quiz-body');
+var scoreCard = document.getElementById('score-sheet');
 
 
 // Initial countdown text
@@ -98,11 +101,17 @@ function selectAnswer(e) {
     nextQuestion();
   } else {
     showScore();
+    timeLeft = 0;
+    playAgain.classList.remove = "hide";
+    playAgain.style.display = "block";
+    playAgain.style.margin = "auto";
+    playAgain.addEventListener('click', RestartQuiz);
   }
 }
 
 function WrongAnswer() {
   timeLeft = timeLeft - 15;
+  alert("Wrong Answer! -15 seconds");
 }
 
 function promptUserInitials() {
@@ -133,11 +142,13 @@ function showScore() {
   // display the score
   questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!' + '<br>' + 'That is ' + scorePercentage + '%!';
   //store the score to the local storage
-  localStorage.setItem("score", scorePercentage);
+  sessionStorage.setItem("score", score);
   // prompt the user for their initials
   promptUserInitials();
   instructions.innerHTML = "";
+  console.log(sessionStorage.getItem("score"));
   return;
+  
 }
 
 function StartQuiz() {
@@ -149,10 +160,28 @@ function StartQuiz() {
     start.style.display = "none";
     // display submit button
     next.classList.remove = "hide";
+    playAgain.style.display = "none";
     showQuestion();
   });
 }
 
+var RestartQuiz = function() {
+  playAgain.addEventListener('click', function() {
+    StartQuiz();
+  });
+  console.log("RestartQuiz");
+  location.reload();
+}
+
 // Start Quiz on page load
 StartQuiz();
-console.log(localStorage);
+
+HighScores.addEventListener('click', function() {
+  quizBody.style.display = "none";
+  scoreCard.style.display = "block";
+});
+
+HighScores.addEventListener('dblclick', function() {
+  quizBody.style.display = "block";
+  scoreCard.style.display = "none";
+});

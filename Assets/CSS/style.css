@@ -1,7 +1,7 @@
 
 body {
     font-family: sans-serif;
-    background-color: #f9fbfd;
+    background: radial-gradient(#107c10, #3a3a3a);
   }
   
   .wrapper {
@@ -14,14 +14,25 @@ body {
     text-align: center;
     padding: 20px;
     padding-top: 0px;
-    color: hsl(206, 17%, 28%);
+    color: #d7ffd7;
+  }
+
+  ul,
+  li {
+    text-decoration: none;
+    list-style: none;
+    font-size: larger;
+    display: block;
+    margin: auto;
+    padding: 0;
+
   }
   
   .card {
     background-color: hsl(0, 0%, 100%);
-    border-radius: 5px;
+    border-radius: 15px;
     border-width: 1px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
+    box-shadow: 0px 0px 15px 10px #107c10c0;
     color: hsl(206, 17%, 28%);
     font-size: 18px;
     margin: auto;
@@ -89,12 +100,7 @@ body {
 
   .btn {
     font-size: larger;
-    margin-top: 10px;
-  }
-  
-  button[disabled] {
-    cursor: default;
-    background: #c0c7cf;
+    margin: 10px;
   }
   
   .float-right {
@@ -108,27 +114,22 @@ body {
   .hide {
     display: none;
   }
-  
-  /* #password {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: none;
-    display: block;
-    width: 100%;
-    padding-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 85px;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 2px dashed #c0c7cf;
-    border-radius: 6px;
-    resize: none;
-    overflow: hidden;
-  } */
+
+  #highscore {
+    text-decoration: none;
+    background: transparent;
+    opacity: .5;
+    cursor: grab;
+    transition: .25s ease-in-out;
+  }
+
+  #highscore:hover {
+    background-blend-mode: hue;
+    opacity: 1;
+    border-radius: 25px;
+    padding: 10px;
+    transition: 0.25s ease-in-out;
+  }
   
   @media (max-width: 690px) {
     .btn {

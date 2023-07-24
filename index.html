@@ -13,17 +13,19 @@
   <body>
     <div class="wrapper">
       <header>
-        <h3 id="highscore">Highscore</h3>
+        <h3><btn id="highscore">Highscore</btn></h3>
         <h3 id="countdown">Time remaining:</h3>
       </header>
       
       <section id="score-sheet" class="card hide">
-
+        <ul>
+          <li>potato</li>
+        </ul>
       </section>
-      <div class="card">
+      <div id="quiz-body" class="card">
         <div class="card-header">
-          <h3 id="question"></h3>
-          <h4 id="instructions">Choose an answer before the time runs out:</h4>
+          <h3 id="question">Robert's Coding Quiz</h3>
+          <h4 id="instructions">Choose an answer before the time runs out: <br>Time will be reduced for each incorrect answer!</h4>
         </div>
         <!-- Target this area from javascript to contain quiz -->
         <div class="answer-btns" id="answer-btns">      
@@ -33,12 +35,12 @@
           <button id="start" class="btn">Start</button>
         </div>
 
-        <div id="nxt-btn" class="card-footer hide">
-          <button id="next" class="btn">Next</button>
+        <div id="nxt-btn" class="card-footer">
+          <button id="next" class="btn hide">Next</button>
         </div>
 
-        <div id="submit-div" class="card-footer hide">
-          <button id="submit" class="btn">Submit</button>
+        <div id="play-again" class="card-footer">
+          <button id="play-again-btn" class="btn hide">Play Again</button>
         </div>
     </div>
   </body>
