@@ -11,10 +11,18 @@ var currentQuestionIndex = 0;
 var score = 0;
 var HighScores = document.getElementById('highscore');
 var quizBody = document.getElementById('quiz-body');
-var scoreCard = document.getElementById('score-sheet');
 var prevScore = sessionStorage.getItem("initials") + " " + sessionStorage.getItem("score") + "/4";
-var createLi = document.createElement('li'); prevScore;
+var scoreCard = $('#score-sheet');
+var highscoreEl = $('#highscore-target');
 
+
+// Highscores
+var printHighscores = function() {
+  var newLi = $("<li>");
+  highscoreEl.append(newLi);
+  console.log(newLi);
+  newLi.text(sessionStorage.getItem("initials") + " " + sessionStorage.getItem("score") + "/4");
+};
 
 // Initial countdown text
 counterH3.innerText = "Time Remaining: " + timeLeft;
@@ -118,10 +126,12 @@ function WrongAnswer() {
 
 function promptUserInitials() {
   var initials = prompt("Enter your initials to save your score.");
+
   if (initials === null) {
     return;
   }
-  localStorage.setItem("initials", initials);
+  sessionStorage.setItem("initials", initials);
+  console.log(initials);
   return initials;
 }
 
@@ -172,20 +182,21 @@ var RestartQuiz = function() {
     StartQuiz();
   });
   console.log("RestartQuiz");
-  $("ul").append(createLi);
+  printHighscores();
   location.reload();
 }
 
 // Start Quiz on page load
 StartQuiz();
-$("ul").append(createLi);
 
 HighScores.addEventListener('click', function() {
   quizBody.style.display = "none";
-  scoreCard.style.display = "block";
+  scoreCard.addClass('show');
 });
 
 HighScores.addEventListener('dblclick', function() {
   quizBody.style.display = "block";
-  scoreCard.style.display = "none";
+  scoreCard.addClass('hide');
 });
+
+
