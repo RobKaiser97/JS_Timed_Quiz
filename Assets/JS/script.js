@@ -1,17 +1,17 @@
 // Variable declarations
 var timeLeft = 100; //sec
-var counterH3 = document.getElementById("countdown");
-var start = document.getElementById('start');
-var next = document.getElementById('next');
-var playAgain = document.getElementById('play-again-btn');
-var questionElement = document.getElementById('question');
-var answerButtonsElement = document.getElementById('answer-btns');
-var instructions = document.getElementById('instructions');
+const counterH3 = document.getElementById("countdown");
+const start = document.getElementById('start');
+const next = document.getElementById('next');
+const playAgain = document.getElementById('play-again-btn');
+const questionElement = document.getElementById('question');
+const answerButtonsElement = document.getElementById('answer-btns');
+const instructions = document.getElementById('instructions');
 var currentQuestionIndex = 0;
 var score = 0;
-var scoreCard = $("#score-card");
-var HighScores = document.getElementById('highscore');
-var quizBody = document.getElementById('quiz-body');
+const scoreCard = $("#score-card");
+const HighScores = document.getElementById('highscore');
+const quizBody = document.getElementById('quiz-body');
 
 // Initialize the countdown timer display
 counterH3.innerText = "Time Remaining: " + timeLeft;
