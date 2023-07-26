@@ -1,5 +1,5 @@
-// Variables
-var timeLeft = 100 //sec
+// Variable declarations
+var timeLeft = 100; //sec
 var counterH3 = document.getElementById("countdown");
 var start = document.getElementById('start');
 var next = document.getElementById('next');
@@ -9,26 +9,16 @@ var answerButtonsElement = document.getElementById('answer-btns');
 var instructions = document.getElementById('instructions');
 var currentQuestionIndex = 0;
 var score = 0;
+var scoreCard = $("#score-card");
 var HighScores = document.getElementById('highscore');
 var quizBody = document.getElementById('quiz-body');
-var prevScore = sessionStorage.getItem("initials") + " " + sessionStorage.getItem("score") + "/4";
-var scoreCard = $('#score-sheet');
-var highscoreEl = $('#highscore-target');
 
-
-// Highscores
-var printHighscores = function() {
-  var newLi = $("<li>");
-  highscoreEl.append(newLi);
-  console.log(newLi);
-  newLi.text(sessionStorage.getItem("initials") + " " + sessionStorage.getItem("score") + "/4");
-};
-
-// Initial countdown text
+// Initialize the countdown timer display
 counterH3.innerText = "Time Remaining: " + timeLeft;
 
+// Array of question objects
 const questions = [
-  {
+{
     question: "What does HTML stand for?",
     answers: [
       { text: "Hyper Text Markup Language", correct: true },
@@ -64,10 +54,9 @@ const questions = [
       { text: "Document Object Model", correct: true }
     ]
   }
-]
+];
 
-// Functions
-
+// Countdown function which starts a timer
 function countdown() {
   var timeInterval = setInterval(function () {
     if (timeLeft > 0) {
@@ -80,6 +69,7 @@ function countdown() {
   }, 1000);
 }
 
+// Show the question on the page
 function showQuestion() {
   resetState();
   let currentQuestion = questions[currentQuestionIndex];
@@ -95,10 +85,10 @@ function showQuestion() {
       button.dataset.correct = answer.correct;
     }
     button.addEventListener('click', selectAnswer);
-    
   });
 }
 
+// Handle the selected answer
 function selectAnswer(e) {
   const selectedButton = e.target;
   const isCorrect = selectedButton.dataset.correct === "true";
@@ -111,6 +101,7 @@ function selectAnswer(e) {
     nextQuestion();
   } else {
     showScore();
+    storeScores();
     timeLeft = 0;
     playAgain.classList.remove = "hide";
     playAgain.style.display = "block";
@@ -119,28 +110,32 @@ function selectAnswer(e) {
   }
 }
 
+// Notify the user of a wrong answer
 function WrongAnswer() {
   timeLeft = timeLeft - 15;
   alert("Wrong Answer! -15 seconds");
 }
 
+// Prompt user for initials to save with high score
 function promptUserInitials() {
   var initials = prompt("Enter your initials to save your score.");
 
   if (initials === null) {
     return;
   }
-  sessionStorage.setItem("initials", initials);
+  localStorage.setItem("initials", initials);
   console.log(initials);
   return initials;
 }
 
+// Clear previous answers before showing new question
 function resetState() {
   while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild);
   }
 }
 
+// Go to the next question
 function nextQuestion() {
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length) {
@@ -148,55 +143,72 @@ function nextQuestion() {
   }
 }
 
+// Show the final score
 function showScore() {
   resetState();
   let scorePercentage = Math.floor(score / questions.length * 100);
-  // display the score
   questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!' + '<br>' + 'That is ' + scorePercentage + '%!';
-  //store the score to the local storage
-  sessionStorage.setItem("score", score);
-  // prompt the user for their initials
+  localStorage.setItem("score", score);
   promptUserInitials();
   instructions.innerHTML = "";
-  console.log(sessionStorage.getItem("score"));
+  console.log(localStorage.getItem("score"));
   return;
-  
 }
 
+// Start the quiz
 function StartQuiz() {
+  localStorage.getItem("scoreCard");
   currentQuestionIndex = 0;
   score = 0;
   start.addEventListener('click', function() {
     countdown();
-    // hide start button
     start.style.display = "none";
-    // display submit button
-    next.classList.remove = "hide";
     playAgain.style.display = "none";
     showQuestion();
   });
 }
 
+// Restart the quiz
 var RestartQuiz = function() {
   playAgain.addEventListener('click', function() {
     StartQuiz();
   });
   console.log("RestartQuiz");
-  printHighscores();
+  localStorage.setItem('myHighscores', $('#score-sheet').html());
+  console.log(localStorage.getItem('myHighscores'));
   location.reload();
 }
 
-// Start Quiz on page load
-StartQuiz();
+// Store highscores in local storage
+var storeScores = function() {
+  var highscoreEl = $("#highscore-target");
+  let newLi = $("<li>");
+  highscoreEl.append(newLi);
+  let newScore = (localStorage.getItem("initials") + " " + localStorage.getItem("score") + "/4").toString().toUpperCase();
+  console.log(newScore);
+  $("li:last").append(newScore);
+};
 
+// Retrieve and apply highscores after page reload
+$(document).ready(function() {
+  var myHighScores = localStorage.getItem('myHighscores');
+  if (myHighScores) {
+    $('#score-sheet').html(myHighScores);
+  }
+});
+
+// Event listeners for HighScores button clicks and double clicks
 HighScores.addEventListener('click', function() {
   quizBody.style.display = "none";
-  scoreCard.addClass('show');
+  $("#score-sheet").removeClass('hide');
+  $("#score-sheet").addClass('show');
 });
 
 HighScores.addEventListener('dblclick', function() {
   quizBody.style.display = "block";
-  scoreCard.addClass('hide');
+  $("#score-sheet").removeClass('show');
+  $("#score-sheet").addClass('hide');
 });
 
-
+// Start Quiz on page load
+StartQuiz();
