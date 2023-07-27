@@ -9,7 +9,7 @@ JavaScript, Jquery, DOM Manipulation, and storing data to the storage.
 
 ## Installation
 
-No installation required, navigate to "[github hosted version of html here](https://robkaiser97.github.io/JS_Password_Generator/)" to veiw the project.
+No installation required, navigate to "[github hosted version of html here](https://robkaiser97.github.io/JS_Timed_Quiz/)" to veiw the project.
 
 ## Usage
 
