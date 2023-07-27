@@ -1,4 +1,4 @@
-# Random Password Generator
+# JavaScript Quiz
 Webpage with JavaScript desgigned to act as a functional quiz. Previous quizes are stored to
 the Highscores page
 
