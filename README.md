@@ -29,7 +29,7 @@ where i was stuck.
 
 ## License
 
-[![License: MIT]
+![License: MIT]
 
 ## Features
 
